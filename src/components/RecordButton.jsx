@@ -31,15 +31,20 @@ export const RecordButton = ({
     const socketConnection = io("http://localhost:4700/");
     setSocket(socketConnection);
     socketConnection.on("connect", () => {
-      console.log("Connected to WebSocket server");
+      toast.success("Connected to WebSocket server");
     });
 
     socketConnection.on("transcript", (response) => {
+      if (!response) {
+        toast.error("No transcription received from server");
+        return;
+      }
       isRecordingRef.current && setTranscription(response);
     });
 
     socketConnection.on("disconnect", () => {
       console.log("Disconnected from WebSocket server");
+      toast.error("Lost connection to server. Please try again.");
     });
 
     return () => {
