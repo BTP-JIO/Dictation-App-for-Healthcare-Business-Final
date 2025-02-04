@@ -25,29 +25,40 @@ export default function RadioButton({ transcription }) {
       showEmptyTranscriptionWarning();
       return;
     }
-    try {
-      if (selectedValue === "progress") {
-        const progressResponse = await axios.post(baseUrl, {
-          transcription_type: "Progress",
-          text: transcription,
-        });
-        if (progressResponse?.data?.status.code < 300) {
-          console.log(progressResponse.data?.response, "((((");
-          navigate("/progress", { state: progressResponse.data?.response });
+
+    toast.promise(
+      (async () => {
+        try {
+          if (selectedValue === "progress") {
+            const progressResponse = await axios.post(baseUrl, {
+              transcription_type: "Progress", 
+              text: transcription,
+            });
+            if (progressResponse?.data?.status.code < 300) {
+              console.log(progressResponse.data?.response, "((((");
+              navigate("/progress", { state: progressResponse.data?.response });
+            }
+          } else if (selectedValue === "soap") {
+            const soapResponse = await axios.post(baseUrl, {
+              transcription_type: "SOAP",
+              text: transcription,
+            });
+            console.log(soapResponse.data?.response, "((((");
+            if (soapResponse?.data?.status.code < 300) {
+              navigate("/soap", { state: soapResponse.data?.response });
+            }
+          }
+        } catch (error) {
+          console.error("Error extracting report", error);
+          throw error;
         }
-      } else if (selectedValue === "soap") {
-        const soapResponse = await axios.post(baseUrl, {
-          transcription_type: "SOAP",
-          text: transcription,
-        });
-        console.log(soapResponse.data?.response, "((((");
-        if (soapResponse?.data?.status.code < 300) {
-          navigate("/soap", { state: soapResponse.data?.response });
-        }
+      })(),
+      {
+        loading: 'Extracting report...',
+        success: 'Report extracted successfully!',
+        error: 'Failed to extract report'
       }
-    } catch (error) {
-      console.error("Error extracting report", error);
-    }
+    );
   };
 
   return (
