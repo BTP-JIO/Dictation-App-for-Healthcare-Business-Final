@@ -1,4 +1,4 @@
-# Dictation-App-for-Healthcare-Business-Final
+# Dictation-App-for-Healthcare-Business
 
 A full-stack AI-powered dictation app designed for healthcare professionals to transcribe doctor-patient conversations in real-time. It generates structured SOAP notes, medical reports, and PDFs while integrating decision-support features. Built using **React, Spring Boot, MySQL, and DeepSpeech**, the app enhances efficiency, reduces documentation workload, and ensures data security with encryption and compliance measures.  
 
