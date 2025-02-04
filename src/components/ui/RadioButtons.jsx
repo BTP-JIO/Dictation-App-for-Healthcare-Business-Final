@@ -7,6 +7,8 @@ import FormControl from "@mui/material/FormControl";
 import { useNavigate } from "react-router-dom";
 import { FileArchive } from "lucide-react";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { showEmptyTranscriptionWarning } from "../../utils/errorModel/noTranscription";
 
 export default function RadioButton({ transcription }) {
   const [selectedValue, setSelectedValue] = React.useState("");
@@ -18,8 +20,9 @@ export default function RadioButton({ transcription }) {
 
   const handleExtract = async () => {
     const baseUrl = "http://10.168.131.232:31460/api/v1/transcription-parser";
+
     if (transcription?.length === 0) {
-      alert("Transcription is empty");
+      showEmptyTranscriptionWarning();
       return;
     }
     try {
@@ -55,14 +58,16 @@ export default function RadioButton({ transcription }) {
         alignItems: "center",
         justifyContent: "right",
         gap: "100px",
-      }}>
+      }}
+    >
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
         value={selectedValue}
         onChange={handleRadioChange}
-        style={{ marginTop: "15px" }}>
+        style={{ marginTop: "15px" }}
+      >
         <FormControlLabel
           value="progress"
           control={<Radio />}
@@ -74,7 +79,8 @@ export default function RadioButton({ transcription }) {
       <button
         onClick={handleExtract}
         disabled={!selectedValue}
-        className="mt-4 bg-gradient-to-r from-[#79bcff] to-[#748bff] hover:shadow-md text-white font-semibold flex flex-row items-center gap-2.5 px-4 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed">
+        className="mt-4 bg-gradient-to-r from-[#79bcff] to-[#748bff] hover:shadow-md text-white font-semibold flex flex-row items-center gap-2.5 px-4 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+      >
         <FileArchive size={20} />
         Extract
       </button>
