@@ -25,7 +25,7 @@ export default function RadioButton({ transcription }) {
     try {
       if (selectedValue === "progress") {
         const progressResponse = await axios.post(baseUrl, {
-          transcription_type: "PROGRESS",
+          transcription_type: "Progress",
           text: transcription,
         });
         if (progressResponse?.data?.status.code < 300) {
