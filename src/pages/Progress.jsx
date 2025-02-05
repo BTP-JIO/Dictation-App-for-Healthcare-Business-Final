@@ -15,7 +15,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import DownloadIcon from "@mui/icons-material/Download";
 import { progressResponse } from "../lib/data";
 import { useLocation } from "react-router-dom";
-import { generatePDF } from "../components/PDFGenerator";
+import { generatePDF } from "../services/PDFGenerator";
 
 // Create a custom theme
 const theme = createTheme({
