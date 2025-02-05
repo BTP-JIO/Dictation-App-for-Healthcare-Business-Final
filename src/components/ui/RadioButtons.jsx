@@ -9,9 +9,15 @@ import { FileArchive } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { showEmptyTranscriptionWarning } from "../../utils/errorModel/noTranscription";
+import {
+  saveTranscription,
+  getStoredTranscription,
+} from "../../utils/transcriptionStorage";
+import { Loading } from "../ui/Loading";
 
 export default function RadioButton({ transcription }) {
   const [selectedValue, setSelectedValue] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
   const navigate = useNavigate();
 
   const handleRadioChange = (event) => {
@@ -26,24 +32,29 @@ export default function RadioButton({ transcription }) {
       return;
     }
 
+    setIsLoading(true);
+
+    // Save current transcription to local storage
+    saveTranscription(transcription);
+
     toast.promise(
       (async () => {
         try {
+          const currentTranscription = getStoredTranscription();
+
           if (selectedValue === "progress") {
             const progressResponse = await axios.post(baseUrl, {
-              transcription_type: "Progress", 
-              text: transcription,
+              transcription_type: "Progress",
+              text: currentTranscription,
             });
             if (progressResponse?.data?.status.code < 300) {
-              console.log(progressResponse.data?.response, "((((");
               navigate("/progress", { state: progressResponse.data?.response });
             }
           } else if (selectedValue === "soap") {
             const soapResponse = await axios.post(baseUrl, {
               transcription_type: "SOAP",
-              text: transcription,
+              text: currentTranscription,
             });
-            console.log(soapResponse.data?.response, "((((");
             if (soapResponse?.data?.status.code < 300) {
               navigate("/soap", { state: soapResponse.data?.response });
             }
@@ -51,12 +62,14 @@ export default function RadioButton({ transcription }) {
         } catch (error) {
           console.error("Error extracting report", error);
           throw error;
+        } finally {
+          setIsLoading(false);
         }
       })(),
       {
-        loading: 'Extracting report...',
-        success: 'Report extracted successfully!',
-        error: 'Failed to extract report'
+        loading: "Extracting report...",
+        success: "Report extracted successfully!",
+        error: "Failed to extract report",
       }
     );
   };
@@ -89,11 +102,11 @@ export default function RadioButton({ transcription }) {
 
       <button
         onClick={handleExtract}
-        disabled={!selectedValue}
+        disabled={!selectedValue || isLoading}
         className="mt-4 bg-gradient-to-r from-[#79bcff] to-[#748bff] hover:shadow-md text-white font-semibold flex flex-row items-center gap-2.5 px-4 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <FileArchive size={20} />
-        Extract
+        {isLoading ? <Loading size="sm" /> : <FileArchive size={20} />}
+        {isLoading ? "Extracting..." : "Extract"}
       </button>
     </FormControl>
   );

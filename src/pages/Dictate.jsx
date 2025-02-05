@@ -4,6 +4,7 @@ import RadioButton from "../components/ui/RadioButtons";
 import { Alert, AlertDescription } from "../components/ui/Alert";
 import "./Dictate.css";
 import { redirect, useLoaderData } from "react-router-dom";
+import { getStoredTranscription, saveTranscription } from "../utils/transcriptionStorage";
 
 export const dictateLoader = () => {
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
@@ -19,6 +20,19 @@ const Dictate = () => {
   const [transcription, setTranscription] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState("");
+
+  // Initialize transcription from local storage
+  useEffect(() => {
+    const storedTranscription = getStoredTranscription();
+    if (storedTranscription) {
+      setTranscription(storedTranscription);
+    }
+  }, []);
+
+  // Update local storage when transcription changes
+  useEffect(() => {
+    saveTranscription(transcription);
+  }, [transcription]);
 
   return (
     <div className="bg-white h-[90vh] w-screen flex justify-center items-center py-6">
