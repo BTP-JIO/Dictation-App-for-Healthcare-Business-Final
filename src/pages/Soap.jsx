@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { generatePDF } from '../services/PDFGenerator';
 import {
   Card,
   CardContent,
@@ -104,6 +105,11 @@ const Soap = () => {
       );
     }
   };
+
+  const handleDownload = async () => {
+    await generatePDF(soapData, "SOAP Notes");
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container
@@ -135,7 +141,8 @@ const Soap = () => {
           <Button
             variant="contained"
             color="secondary"
-            startIcon={<DownloadIcon />}>
+            startIcon={<DownloadIcon />}
+            onClick={handleDownload}>
             Download
           </Button>
         </Box>

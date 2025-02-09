@@ -15,6 +15,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import DownloadIcon from "@mui/icons-material/Download";
 import { progressResponse } from "../lib/data";
 import { useLocation } from "react-router-dom";
+import { generatePDF } from "../services/PDFGenerator";
 
 // Create a custom theme
 const theme = createTheme({
@@ -103,6 +104,10 @@ const Progress = () => {
     }
   };
 
+  const handleDownload = async () => {
+    await generatePDF(progressData, "Progress Notes");
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container
@@ -135,7 +140,8 @@ const Progress = () => {
           <Button
             variant="contained"
             color="secondary"
-            startIcon={<DownloadIcon />}>
+            startIcon={<DownloadIcon />}
+            onClick={handleDownload}>
             Download
           </Button>
         </Box>
