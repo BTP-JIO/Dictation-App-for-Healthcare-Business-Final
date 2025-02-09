@@ -35,7 +35,7 @@ const Dictate = () => {
   }, [transcription]);
 
   return (
-    <div className="bg-white h-[90vh] w-screen flex justify-center items-center py-6">
+    <div className="bg-[#6881fd]/10 h-[90vh] w-screen flex justify-center items-center py-6">
       <div className="mx-auto">
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 h-[600px]">
           {/* Visualizer Card */}
@@ -70,7 +70,7 @@ const Dictate = () => {
               </Alert>
             )}
             <textarea
-              className={`w-full h-full mt-4 p-4 bg-white border border-indigo-300 rounded-lg resize-none ${
+              className={`w-full h-full text-slate-900 font-mono mt-4 p-4 bg-white border border-indigo-300 rounded-lg resize-none ${
                 isRecording ? "animate-glow caret-yellow-400 caret-glow" : ""
               }`}
               value={transcription}
