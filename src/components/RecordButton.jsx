@@ -149,11 +149,11 @@ export const RecordButton = ({
 
   return (
     <div className="flex flex-col items-center gap-[100px]">
-      <div className="w-full min-h-[190px] flex items-center justify-center max-w-md bg-gradient-to-r from-[#9DCEFF]/30 to-[#92A3FD]/30 bg-opacity-80 backdrop-blur-md rounded-lg shadow-lg overflow-hidden">
+      <div className="w-full min-h-[190px] flex items-center justify-center max-w-md bg-[#33CCFF]/5 bg-opacity-80 backdrop-blur-md rounded-lg shadow-lg overflow-hidden">
         <AudioAnalyser
           {...audioProps}
           backgroundColor="transparent"
-          strokeColor="#6781ff"
+          strokeColor="#33CCFF"
           className="w-full h-32"
         />
       </div>
@@ -180,7 +180,7 @@ export const RecordButton = ({
           )}
         </motion.button>
 
-        <div className="text-lg font-semibold mb-2 text-center bg-gradient-to-r from-[#5badff] to-[#6781ff] bg-clip-text text-transparent">
+        <div className="text-lg font-semibold mb-2 text-center text-[#4abce2]">
           {formatTime(recordingTime)}
         </div>
       </div>

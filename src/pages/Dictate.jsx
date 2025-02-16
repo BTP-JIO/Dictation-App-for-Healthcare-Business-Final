@@ -42,7 +42,7 @@ const Dictate = () => {
       <div className="mx-auto">
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 h-[600px]">
           {/* Visualizer Card */}
-          <div className="min-w-[300px] md:min-w-[400px] border border-[#9DCEFF] bg-[#ecf5ff] bg-opacity-80 backdrop-blur-md rounded-lg shadow-lg p-6 flex flex-col justify-between h-full">
+          <div className="min-w-[300px] md:min-w-[400px] border border-[#9DCEFF] bg-[#33CCFF]/10 bg-opacity-80 backdrop-blur-md rounded-lg shadow-lg p-6 flex flex-col justify-between h-full">
             <div className="bg-[#3399FF] text-white text-center py-2 rounded-md">
               <h2 className="text-xl font-semibold">Audio Recorder</h2>
             </div>
@@ -52,7 +52,7 @@ const Dictate = () => {
                 isRecording={isRecording}
                 setIsRecording={setIsRecording}
               />
-              <p className="mt-1 italic text-sm bg-gradient-to-r from-[#0080ff] to-[#002aff] bg-clip-text text-transparent">
+              <p className="mt-1 italic text-sm text-[#33CCFF]">
                 {isProcessing
                   ? "Processing..."
                   : isRecording
@@ -63,7 +63,7 @@ const Dictate = () => {
           </div>
 
           {/* Transcription Card */}
-          <div className="min-w-[400px] md:w-[800px] bg-gradient-to-r from-[#9DCEFF]/30 to-[#92A3FD]/30 bg-opacity-80 backdrop-blur-md border border-[#9DCEFF] rounded-lg shadow-lg p-6 flex flex-col h-full">
+          <div className="min-w-[400px] md:w-[800px] bg-[#33CCFF]/10 bg-opacity-80 backdrop-blur-md border border-[#9DCEFF] rounded-lg shadow-lg p-6 flex flex-col h-full">
             <div className="bg-[#3399FF] text-white text-center py-2 rounded-md">
               <h2 className="text-xl font-semibold">Real-Time Transcription</h2>
             </div>
@@ -73,7 +73,7 @@ const Dictate = () => {
               </Alert>
             )}
             <textarea
-              className={`w-full h-full text-slate-900 font-mono mt-4 p-4 bg-indigo-50 border border-indigo-300 rounded-lg resize-none ${
+              className={`w-full h-full text-slate-900 font-mono mt-4 p-4 bg-[#ffffff] border border-indigo-300 rounded-lg resize-none ${
                 isRecording ? "animate-glow caret-yellow-400 caret-glow" : ""
               }`}
               value={transcription}
