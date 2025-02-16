@@ -8,7 +8,7 @@ const Header = () => {
     <header className="relative">
       <div className="bg-gradient-to-b from-white to-blue-50">
         <div className="h-1 bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400" />
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex-1" />
             <div className="group flex items-center gap-3 hover:opacity-90 transition-all duration-300 cursor-pointer">
@@ -17,7 +17,7 @@ const Header = () => {
                 className="text-blue-600 group-hover:rotate-12 transition-transform duration-300"
                 strokeWidth={1.5}
               />
-              <h1 className="text-3xl font-extrabold tracking-tight">
+              <h1 className="text-3xl font-semibold tracking-tight">
                 <span className="bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
                   Medi
                 </span>
