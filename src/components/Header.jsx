@@ -20,15 +20,15 @@ const Header = () => {
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
 
   return (
-    <header className="relative">
-      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 shadow-lg">
-        <div className="h-1 bg-gradient-to-r from-blue-200 to-indigo-200 opacity-30" />
+    <header className="relative font-serif">
+      <div className="bg-[#ffffff] shadow-lg">
+        {/* <div className="h-1 bg-gradient-to-r from-blue-200 to-indigo-200 opacity-30" /> */}
         <div className="py-4 px-6 flex items-center justify-between">
           <div className="flex-1" />
           <div className="flex items-center space-x-2">
-            <Stethoscope size={22} className="text-white" />
-            <h1 className="text-2xl font-bold text-white tracking-wide">
-              Medi<span className="text-blue-200">Scribe</span>
+            <Stethoscope size={22} className="text-[#3399FF]" />
+            <h1 className="text-2xl font-bold text-slate-900 tracking-wide">
+              Medi<span className="text-slate-700">Scribe</span>
             </h1>
           </div>
           {userDetails ? (
@@ -41,9 +41,9 @@ const Header = () => {
             <div className="flex-1" />
           )}
         </div>
-        <div className="h-0.5 bg-gradient-to-r from-blue-200 to-indigo-200 opacity-30" />
+        {/* <div className="h-0.5 bg-gradient-to-r from-blue-200 to-indigo-200 opacity-30" /> */}
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-b from-black/5 to-transparent" />
+      {/* <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-b from-black/5 to-transparent" /> */}
     </header>
   );
 };

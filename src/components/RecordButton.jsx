@@ -5,6 +5,7 @@ import io from "socket.io-client";
 import { Buffer } from "buffer";
 import { downSampleBuffer } from "../utils/getDownSampleBuffer";
 import { formatTime } from "../utils/formatTime";
+import { motion } from "framer-motion";
 
 export const RecordButton = ({
   setIsRecording,
@@ -158,15 +159,26 @@ export const RecordButton = ({
       </div>
 
       <div className="flex flex-col gap-2 items-center">
-        <button
+        <motion.button
           onClick={handleToggleRecording}
-          className="bg-gradient-to-r from-[#80bfff] to-[#738aff] hover:opacity-80 text-white font-bold p-4 rounded-full shadow-xl shadow-purple-200 mb-4 transition-all duration-300 ease-in-out transform hover:scale-105">
-          {status === "recording" ? (
-            <CirclePause size={32} className="text-red-600" />
-          ) : (
-            <Mic size={32} className="text-white" />
+          className="relative bg-[#33CCFF] hover:opacity-80 text-white font-bold p-4 rounded-full shadow-xl mb-4 transition-all duration-300 ease-in-out transform hover:scale-105"
+        >
+          {/* Radiating effect when recording */}
+          {status === "recording" && (
+            <motion.span
+              className="absolute inset-0 w-full h-full bg-[#33CCFF] opacity-50 rounded-full"
+              animate={{ scale: [1, 1.8], opacity: [0.5, 0] }}
+              transition={{ duration: 1.2, repeat: Infinity, ease: "easeOut" }}
+            />
           )}
-        </button>
+
+          {/* Mic or Pause Icon */}
+          {status === "recording" ? (
+            <CirclePause size={32} className="text-red-400 relative z-10" />
+          ) : (
+            <Mic size={32} className="text-white relative z-10" />
+          )}
+        </motion.button>
 
         <div className="text-lg font-semibold mb-2 text-center bg-gradient-to-r from-[#5badff] to-[#6781ff] bg-clip-text text-transparent">
           {formatTime(recordingTime)}
