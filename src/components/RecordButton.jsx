@@ -6,6 +6,7 @@ import { Buffer } from "buffer";
 import { downSampleBuffer } from "../utils/getDownSampleBuffer";
 import { formatTime } from "../utils/formatTime";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 export const RecordButton = ({
   setIsRecording,
@@ -31,21 +32,42 @@ export const RecordButton = ({
   useEffect(() => {
     const socketConnection = io("http://localhost:4700/");
     setSocket(socketConnection);
+
     socketConnection.on("connect", () => {
-      toast.success("Connected to WebSocket server");
+      toast.success("Connected to transcription server", {
+        icon: "🎤",
+        duration: 3000,
+      });
+    });
+
+    socketConnection.on("connect_error", (error) => {
+      toast.error("Failed to connect to transcription server", {
+        icon: "🔌",
+        duration: 4000,
+      });
+      setIsRecording(false);
     });
 
     socketConnection.on("transcript", (response) => {
       if (!response) {
-        toast.error("No transcription received from server");
+        toast.error("No transcription received from server", {
+          icon: "❌",
+          duration: 4000,
+        });
         return;
       }
       isRecordingRef.current && setTranscription(response);
     });
 
     socketConnection.on("disconnect", () => {
-      console.log("Disconnected from WebSocket server");
-      toast.error("Lost connection to server. Please try again.");
+      toast.error(
+        "Lost connection to transcription server. Please try again.",
+        {
+          icon: "🔌",
+          duration: 4000,
+        }
+      );
+      setIsRecording(false);
     });
 
     return () => {
