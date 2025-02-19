@@ -16,6 +16,7 @@ export const RecordButton = ({
   const [status, setStatus] = useState("");
   const [recordingTime, setRecordingTime] = useState(0);
   const [socket, setSocket] = useState(null);
+  const [isMicEnabled, setIsMicEnabled] = useState(false);
   const timerRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const RECORDING_MAX_DURATION = 240;
@@ -38,6 +39,7 @@ export const RecordButton = ({
         icon: "🎤",
         duration: 3000,
       });
+      setIsMicEnabled(true);
     });
 
     socketConnection.on("connect_error", (error) => {
@@ -46,6 +48,7 @@ export const RecordButton = ({
         duration: 4000,
       });
       setIsRecording(false);
+      setIsMicEnabled(false);
     });
 
     socketConnection.on("transcript", (response) => {
@@ -183,6 +186,7 @@ export const RecordButton = ({
       <div className="flex flex-col gap-2 items-center">
         <motion.button
           onClick={handleToggleRecording}
+          disabled={!isMicEnabled}
           className="relative bg-[#33CCFF] hover:opacity-80 text-white font-bold p-4 rounded-full shadow-xl mb-4 transition-all duration-300 ease-in-out transform hover:scale-105"
         >
           {/* Radiating effect when recording */}
