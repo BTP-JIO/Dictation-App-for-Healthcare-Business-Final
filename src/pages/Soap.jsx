@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { generatePDF } from '../services/PDFGenerator';
+import React, { useEffect, useState } from "react";
+import { generatePDF } from "../services/PDFGenerator";
 import {
   Card,
   CardContent,
@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import DownloadIcon from "@mui/icons-material/Download";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 
 export const theme = createTheme({
   palette: {
@@ -31,8 +31,15 @@ export const theme = createTheme({
 });
 
 const Soap = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
   const data = location.state || {};
+
+  useEffect(() => {
+    if (!data || Object.keys(data).length === 0) {
+      navigate("/");
+      return null;
+    }
+  });
 
   const [soapData, setSoapData] = useState(data);
 
@@ -89,15 +96,14 @@ const Soap = () => {
       );
     } else {
       return (
-        <Box key={key} sx={{ mb: 2 }}>
+        <Box sx={{ mb: 2 }}>
           <Typography variant="subtitle1" color="primary" gutterBottom>
-            {labelText}:
+            Label Text:
           </Typography>
           <TextField
             fullWidth
             variant="outlined"
             value={value || ""}
-            onChange={(e) => handleChange(key, e.target.value, parentKey)}
             multiline
             rows={value?.length > 100 ? 4 : 2}
           />
@@ -114,7 +120,8 @@ const Soap = () => {
     <ThemeProvider theme={theme}>
       <Container
         maxWidth="md"
-        sx={{ py: 4, bgcolor: "background.default", minHeight: "100vh" }}>
+        sx={{ py: 4, bgcolor: "background.default", minHeight: "100vh" }}
+      >
         <Card elevation={3}>
           <CardHeader
             title={
@@ -122,7 +129,8 @@ const Soap = () => {
                 variant="h4"
                 align="center"
                 color="#ffffff"
-                gutterBottom>
+                gutterBottom
+              >
                 SOAP Notes
               </Typography>
             }
@@ -142,7 +150,8 @@ const Soap = () => {
             variant="contained"
             color="secondary"
             startIcon={<DownloadIcon />}
-            onClick={handleDownload}>
+            onClick={handleDownload}
+          >
             Download
           </Button>
         </Box>

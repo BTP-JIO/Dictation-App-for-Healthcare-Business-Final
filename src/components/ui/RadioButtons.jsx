@@ -24,6 +24,7 @@ export default function RadioButton({ transcription }) {
     setSelectedValue(event.target.value);
   };
 
+
   const handleExtract = async () => {
     const baseUrl = "http://10.168.131.232:31460/api/v1/transcription-parser";
 

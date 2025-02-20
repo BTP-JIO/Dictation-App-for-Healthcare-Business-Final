@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,7 +14,7 @@ import {
 import SaveIcon from "@mui/icons-material/Save";
 import DownloadIcon from "@mui/icons-material/Download";
 import { progressResponse } from "../lib/data";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { generatePDF } from "../services/PDFGenerator";
 
 // Create a custom theme
@@ -33,8 +33,16 @@ const theme = createTheme({
 });
 
 const Progress = () => {
-  const location = useLocation();
+
+  const navigate = useNavigate();
   const data = location.state || {};
+
+  useEffect(() => {
+    if (!data || Object.keys(data).length === 0) {
+      navigate("/");
+      return null;
+    }
+  });
 
   const [progressData, setProgressData] = useState(data);
 
@@ -53,7 +61,7 @@ const Progress = () => {
   };
 
   const renderField = (key, value, depth = 0, parentKey = null) => {
-    if (value === null || value === undefined) return null; 
+    if (value === null || value === undefined) return null;
 
     const labelText = key
       .replace(/_/g, " ")
@@ -112,7 +120,8 @@ const Progress = () => {
     <ThemeProvider theme={theme}>
       <Container
         maxWidth="md"
-        sx={{ py: 4, bgcolor: "background.default", minHeight: "100vh" }}>
+        sx={{ py: 4, bgcolor: "background.default", minHeight: "100vh" }}
+      >
         <Card elevation={3}>
           <CardHeader
             title={
@@ -120,7 +129,8 @@ const Progress = () => {
                 variant="h4"
                 align="center"
                 color="#ffffff"
-                gutterBottom>
+                gutterBottom
+              >
                 Progress Notes
               </Typography>
             }
@@ -141,7 +151,8 @@ const Progress = () => {
             variant="contained"
             color="secondary"
             startIcon={<DownloadIcon />}
-            onClick={handleDownload}>
+            onClick={handleDownload}
+          >
             Download
           </Button>
         </Box>
